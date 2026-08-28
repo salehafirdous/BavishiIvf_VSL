@@ -90,10 +90,10 @@ function App() {
     name: '',
     phone: '',
     duration: '1-2 years',
-    priorTreatment: 'none',
-    location: 'Surat'
+    priorTreatment: 'none'
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   React.useEffect(() => {
@@ -122,7 +122,7 @@ function App() {
     }
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone) {
       alert('Please fill out all required fields.');
@@ -132,8 +132,37 @@ function App() {
       alert('Please enter a valid 10-digit mobile number.');
       return;
     }
-    // Simulate API lead submission
-    setFormSubmitted(true);
+    
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('https://mysamplewebsite.in/api/crm_leads/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          opportunity: 'Bavishi IVF Surat VSL Campaign',
+          salesperson_id: 2,
+          company_id: 94,
+          contact_name: formData.name,
+          description: `Trying Duration: ${formData.duration}\nPrior Treatment: ${formData.priorTreatment}\nSubmission Time: ${new Date().toLocaleString()}`
+        })
+      });
+
+      if (response.ok) {
+        setFormSubmitted(true);
+      } else {
+        alert('There was an issue submitting your request. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error submitting lead:', error);
+      alert('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const scrollToForm = () => {
@@ -412,14 +441,13 @@ function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
             {diffSteps.map((step, idx) => (
-              <div 
-                key={idx} 
-                className={`bg-[#FAF9F5] p-6 rounded-3xl border border-slate-200/80 hover:border-plum/20 hover:shadow-md transition duration-300 flex flex-col h-full ${
-                  idx === 3 ? 'md:col-start-2 md:col-span-2' : 'md:col-span-2'
-                }`}
+              <div
+                key={idx}
+                className={`bg-[#FAF9F5] p-6 rounded-3xl border border-slate-200/80 hover:border-plum/20 hover:shadow-md transition duration-300 flex flex-col h-full ${idx === 3 ? 'md:col-start-2 md:col-span-2' : 'md:col-span-2'
+                  }`}
               >
                 <div className="w-full h-44 overflow-hidden rounded-2xl mb-4 bg-slate-100 shadow-sm shrink-0">
-                  <img src={step.image} alt={step.title} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                  <img src={step.image} alt={step.title} className={`w-full h-full object-cover transition-transform duration-500 hover:scale-105 ${idx === 1 ? 'object-[center_85%]' : idx === 2 ? 'object-[center_20%]' : idx === 3 ? 'object-[center_10%]' : ''}`} />
                 </div>
                 <h3 className="text-lg font-bold text-plum mb-2">{step.title}</h3>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{step.desc}</p>
@@ -427,9 +455,12 @@ function App() {
             ))}
           </div>
 
-          <div className="mt-10 p-5 bg-plum/5 rounded-2xl flex items-center justify-center gap-2 text-xs sm:text-sm text-plum font-semibold text-left">
-            <InfoIcon className="text-plum shrink-0" />
-            <span>Bavishi Fertility Institute’s official page highlights personalised plans, advanced IVF laboratory systems, privacy protocols, and treatment options across male and female infertility.</span>
+          <div className="mt-10 p-5 bg-plum/5 rounded-2xl flex flex-col items-center justify-center gap-2 text-xs sm:text-sm text-plum font-semibold text-center">
+            <div className="flex items-center justify-center gap-2">
+              <InfoIcon className="text-plum shrink-0" />
+              <span>Bavishi Fertility Institute’s official page highlights personalised plans, advanced IVF laboratory systems, privacy protocols, and treatment</span>
+            </div>
+            <span>options across male and female infertility.</span>
           </div>
         </div>
       </section>
@@ -439,7 +470,7 @@ function App() {
         <div className="w-full max-w-4xl">
           <div className="text-center mb-10">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-plum tracking-tight">
-              Compare the Journeys
+              COMPARE THE JOURNEYS
             </h2>
             <p className="mt-2 text-slate-500 text-sm">
               See how our diagnostic-first approach compares to conventional fertility pipelines.
@@ -700,9 +731,10 @@ function App() {
 
                 <button
                   type="submit"
-                  className="w-full bg-rose-cta hover:bg-rose-cta/90 text-white font-bold py-3.5 rounded-xl text-base shadow-lg transition duration-200 mt-2"
+                  disabled={isSubmitting}
+                  className={`w-full bg-rose-cta hover:bg-rose-cta/90 text-white font-bold py-3.5 rounded-xl text-base shadow-lg transition duration-200 mt-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                 >
-                  Book My Free Consultation
+                  {isSubmitting ? 'Submitting...' : 'Book My Free Consultation'}
                 </button>
 
                 <span className="text-[10px] text-slate-400 flex items-center justify-center gap-1 mt-2">

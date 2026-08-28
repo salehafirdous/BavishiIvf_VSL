@@ -8,7 +8,7 @@
   --color-rose-cta: #ED458A;
   --color-gold-brand: #F59E0B;
   --color-ivory-brand: #FAF6F0;
-  
+
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Fraunces', Georgia, serif;
 
@@ -21,6 +21,7 @@
   0% {
     transform: translate(-150%) skew(-20deg);
   }
+
   100% {
     transform: translate(150%) skew(-20deg);
   }
@@ -31,6 +32,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -38,10 +40,13 @@
 }
 
 @keyframes pulse-pop {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.75;
     transform: scale(0.98);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.02);
@@ -59,7 +64,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-display);
 }
 
@@ -67,13 +75,16 @@ h1, h2, h3, h4 {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--color-plum-light);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-plum);
 }
