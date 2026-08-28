@@ -145,8 +145,8 @@ function App() {
           name: formData.name,
           phone: formData.phone,
           opportunity: 'Bavishi IVF Surat VSL Campaign',
-          salesperson_id: 2,
-          company_id: 94,
+          salesperson_id: 107,
+          company_id: 38,
           contact_name: formData.name,
           description: `Trying Duration: ${formData.duration}\nPrior Treatment: ${formData.priorTreatment}\nSubmission Time: ${new Date().toLocaleString()}`
         })
