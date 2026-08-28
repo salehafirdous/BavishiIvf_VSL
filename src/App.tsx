@@ -82,7 +82,7 @@ const ArrowUpIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
 );
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'hindi' | 'gujarati'>('hindi');
+
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   // Lead form state
@@ -173,24 +173,6 @@ function App() {
     setOpenFaq(prev => (prev === index ? null : index));
   };
 
-  const videoScripts = {
-    hindi: [
-      { time: "0–5 sec | Hook", text: "“आपकी reports normal हैं. आपके husband की reports भी normal हैं. तो फिर pregnancy क्यों नहीं हो रही?”" },
-      { time: "5–15 sec", text: "“अगर आप Surat में रहते हैं और 1 साल, 2 साल या उससे भी ज़्यादा समय से baby के लिए try कर रहे हैं, तो अगला treatment शुरू करने से पहले ये बात समझना बहुत ज़रूरी है.”" },
-      { time: "15–30 sec", text: "“बहुत से couples हमारे पास कई tests, medicines, IUI और कभी-कभी failed IVF cycle के बाद आते हैं. लेकिन जब हम उनसे पूछते हैं 'क्या किसी ने आपको साफ-साफ बताया कि pregnancy क्यों नहीं हो रही?' अक्सर जवाब होता हैनहीं.”" },
-      { time: "30–45 sec | Brand Mention", text: "“Bavishi Fertility Institute, Surat में हम treatment recommend करने से पहले आपकी पूरी fertility history को समझने पर focus करते हैं. आपकी age, egg reserve, sperm factors, previous treatment response, medical history और previous IVF में क्या हुआइन सबको साथ में देखा जाता है.”" },
-      { time: "45–60 sec", text: "“क्योंकि सिर्फ एक और test, एक और medicine या एक और IVF cycle हमेशा सही answer नहीं होता. पहले clarity होनी चाहिए. फिर treatment.”" },
-      { time: "60–75 sec | CTA", text: "“अगर आप Surat में हैं और अपनी fertility journey को लेकर confused हैं, तो नीचे अपनी details share कीजिए. Bavishi Fertility Institute में आपका case समझकर आपको clear next step बताया जाएगा. Click below and request your consultation.”" }
-    ],
-    gujarati: [
-      { time: "0–5 sec | Hook", text: "“તમારી reports normal છે. તમારા husbandની reports પણ normal છે. તો પછી pregnancy કેમ નથી થતી?”" },
-      { time: "5–15 sec", text: "“જો તમે Suratમાં રહો છો અને છેલ્લા 1 વર્ષ, 2 વર્ષ કે તેથી પણ વધારે સમયથી baby માટે try કરી રહ્યા છો, તો આગળનું treatment શરૂ કરતા પહેલાં આ સમજવું ખૂબ જરૂરી છે.”" },
-      { time: "15–30 sec", text: "“ઘણા couples અમારી પાસે multiple tests, medicines, IUI અને ક્યારેક failed IVF પછી આવે છે. પણ જ્યારે અમે પૂછીએ 'તમને કોઈએ સ્પષ્ટ રીતે સમજાવ્યું કે pregnancy કેમ નથી થતી?' ઘણી વખત જવાબ હોય છેના.”" },
-      { time: "30–45 sec | Brand Mention", text: "“Bavishi Fertility Institute, Suratમાં અમે treatment પહેલાં તમારી complete fertility history સમજવા પર focus કરીએ છીએ. તમારી age, egg reserve, sperm factors, previous treatment response, medical history અને previous IVFમાં શું થયુંઆ બધું સાથે review કરવામાં આવે છે.”" },
-      { time: "45–60 sec", text: "“કારણ કે એક વધુ test, એક વધુ medicine અથવા એક વધુ IVF cycle જ હંમેશા સાચો જવાબ નથી. પહેલા clarity. પછી treatment.”" },
-      { time: "60–75 sec | CTA", text: "“જો તમે Suratમાં છો અને તમારી fertility journeyને લઈને confused છો, તો નીચે તમારી details share કરો. Bavishi Fertility Instituteમાં તમારો case સમજીને યોગ્ય next step સમજાવવામાં આવશે. Click below and request your consultation.”" }
-    ]
-  };
 
   const factChecks = [
     "Trying for 1–3 years, but still no clear reason for the delay.",
@@ -299,7 +281,7 @@ function App() {
       </header>
 
       {/* 3. Hero Section */}
-      <section className="w-full max-w-4xl px-4 py-12 text-center flex flex-col items-center">
+      <section className="w-full max-w-5xl px-4 py-12 text-center flex flex-col items-center">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-plum leading-tight max-w-3xl tracking-tight">
           Trying for a Baby for Over 12 Months?
         </h1>
@@ -320,7 +302,7 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-br from-plum/20 to-black/80 z-0"></div>
             <div className="relative z-10 flex flex-col items-center text-white px-4">
               <span className="bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-3">
-                Webinar Video Coming Soon
+                Hindi Version
               </span>
               <div className="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center border border-white/20 mb-4 backdrop-blur-sm cursor-not-allowed">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white/50 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -335,30 +317,23 @@ function App() {
             </div>
           </div>
 
-          {/* Video Script Tabbed Reader */}
-          <div className="w-full md:w-[320px] bg-slate-50 border-t md:border-t-0 md:border-l border-slate-200 flex flex-col h-[320px] md:h-auto">
-            <div className="flex border-b border-slate-200">
-              <button
-                onClick={() => setActiveTab('hindi')}
-                className={`flex-1 py-3 text-xs font-bold text-center border-b-2 transition ${activeTab === 'hindi' ? 'border-plum text-plum bg-white' : 'border-transparent text-slate-400 hover:text-slate-600'}`}
-              >
-                Hindi Script
-              </button>
-              <button
-                onClick={() => setActiveTab('gujarati')}
-                className={`flex-1 py-3 text-xs font-bold text-center border-b-2 transition ${activeTab === 'gujarati' ? 'border-plum text-plum bg-white' : 'border-transparent text-slate-400 hover:text-slate-600'}`}
-              >
-                Gujarati Script
-              </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {videoScripts[activeTab].map((item, idx) => (
-                <div key={idx} className="text-left text-xs">
-                  <span className="font-bold text-plum-light block mb-1">{item.time}</span>
-                  <p className="text-slate-600 leading-relaxed italic">{item.text}</p>
-                </div>
-              ))}
+          {/* Right Video Box Partition */}
+          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative aspect-video md:aspect-auto min-h-[280px] border-t md:border-t-0 md:border-l border-slate-700">
+            <div className="absolute inset-0 bg-gradient-to-br from-plum/20 to-black/80 z-0"></div>
+            <div className="relative z-10 flex flex-col items-center text-white px-4">
+              <span className="bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-3">
+                Gujarati Version
+              </span>
+              <div className="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center border border-white/20 mb-4 backdrop-blur-sm cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white/50 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold">Watch This 5-Minute Doctor Video</h3>
+              <p className="text-xs text-slate-300 mt-2 max-w-xs">
+                Dr. Bavishi explains why you may not need another cycle right away, but a clearer diagnosis.
+              </p>
             </div>
           </div>
         </div>
