@@ -238,6 +238,9 @@ function App() {
   ];
 
   const testimonials = [
+    { title: "Patient Review", id: "zO91KruM-m0", subtitle: "Success Story", type: "video" },
+    { title: "Patient Review", id: "llJJm3TmbCA", subtitle: "Success Story", type: "video" },
+    { title: "Patient Review", id: "hwyKJITCgFk", subtitle: "Success Story", type: "video" },
     { title: "Personalised Treatment Wins", id: "SbkV-1fSonM", subtitle: "Patient Review", type: "video" },
     { title: "Patient Review", id: "tfc645Tz3vw", subtitle: "Success Story", type: "video" },
     { title: "Patient Review", id: "4M_szNqtRMA", subtitle: "Success Story", type: "video" },
@@ -368,7 +371,7 @@ function App() {
 
         <button
           onClick={scrollToForm}
-          className="mt-8 bg-rose-brand hover:brightness-110 text-white font-bold px-10 py-5 rounded-full text-lg sm:text-xl flex items-center shadow-lg transition duration-300 transform hover:scale-[1.02] relative overflow-hidden justify-center animate-pulse-pop group"
+          className="mt-8 bg-rose-brand hover:brightness-110 text-white font-bold px-4 sm:px-10 py-3.5 sm:py-5 rounded-full text-[13px] sm:text-xl flex items-center shadow-lg transition duration-300 transform hover:scale-[1.02] relative overflow-hidden justify-center animate-pulse-pop group w-[95%] sm:w-auto max-w-full mx-auto"
         >
           <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-150%] animate-cta-shine"></span>
           <span className="relative z-10 flex items-center justify-center gap-2 whitespace-nowrap">
