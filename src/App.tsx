@@ -94,7 +94,6 @@ function App() {
     duration: '1-2 years',
     priorTreatment: 'none'
   });
-  const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -172,7 +171,7 @@ function App() {
       });
 
       if (response.ok) {
-        setFormSubmitted(true);
+        window.location.href = '/thank-you';
       } else {
         alert('There was an issue submitting your request. Please try again later.');
       }
@@ -655,21 +654,7 @@ function App() {
           </p>
 
           <div className="mt-8 bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl text-left border border-white/10 max-w-lg mx-auto">
-            {formSubmitted ? (
-              <div className="text-center py-8">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 border border-emerald-200">
-                  <CheckIcon />
-                </div>
-                <h3 className="text-2xl font-bold text-plum">Thank You!</h3>
-                <p className="mt-2 text-slate-600 text-sm">
-                  We have received your enquiry. During clinic hours, our team typically calls within <strong>5–30 minutes</strong>.
-                </p>
-                <p className="mt-4 text-xs text-slate-400">
-                  Please keep your phone active, as we will call from our Surat clinic.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleFormSubmit} className="space-y-4">
+            <form onSubmit={handleFormSubmit} className="space-y-4">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
                     Your Name *
@@ -753,7 +738,6 @@ function App() {
                   <span>Your data is fully encrypted and private. We make no false promises.</span>
                 </span>
               </form>
-            )}
           </div>
 
           <div className="mt-8 text-sm sm:text-base text-slate-300 space-y-1">
