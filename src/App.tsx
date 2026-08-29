@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import logo from './assets/logo.png';
 import imgHistory from './assets/history_review.png';
 import imgCouple from './assets/couple_consultation.png';
@@ -82,6 +82,8 @@ const ArrowUpIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
 );
 
 function App() {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false);
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -96,7 +98,24 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (isCarouselHovered) return;
+    
+    const interval = setInterval(() => {
+      if (carouselRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          carouselRef.current.scrollBy({ left: 344, behavior: 'smooth' }); // Scroll approx one card
+        }
+      }
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isCarouselHovered]);
+
+  useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowScrollTop(true);
@@ -132,7 +151,7 @@ function App() {
       alert('Please enter a valid 10-digit mobile number.');
       return;
     }
-    
+
     setIsSubmitting(true);
     try {
       const response = await fetch('https://mysamplewebsite.in/api/crm_leads/create', {
@@ -220,10 +239,14 @@ function App() {
   ];
 
   const testimonials = [
-    { title: "Overcoming 3 Failed IVF Cycles", id: "319LcXY6D8I", subtitle: "Success Story" },
-    { title: "Personalised Treatment Wins", id: "SbkV-1fSonM", subtitle: "Patient Review" },
-    { title: "A Miracle After 5 Years", id: "zoNpyKlxHKk", subtitle: "Gratitude Video" },
-    { title: "Surat Couple's Journey", id: "_jEgFL09spA", subtitle: "Fertility Hope" }
+    { title: "Personalised Treatment Wins", id: "SbkV-1fSonM", subtitle: "Patient Review", type: "video" },
+    { title: "Patient Review", id: "tfc645Tz3vw", subtitle: "Success Story", type: "video" },
+    { title: "Patient Review", id: "4M_szNqtRMA", subtitle: "Success Story", type: "video" },
+    { title: "Patient Review", id: "EdxW_0MOiOM", subtitle: "Success Story", type: "video" },
+    { title: "Patient Review", id: "xHqTCirHpyM", subtitle: "Success Story", type: "video" },
+    { title: "Patient Review", id: "0vO4G8l6fr8", subtitle: "Success Story", type: "video" },
+    { title: "Patient Review", id: "Stic7iwuvlU", subtitle: "Success Story", type: "video" },
+    { title: "Patient Review", id: "kt9GROuYlGA", subtitle: "Success Story", type: "video" }
   ];
 
   const faqs = [
@@ -282,23 +305,25 @@ function App() {
 
       {/* 3. Hero Section */}
       <section className="w-full max-w-5xl px-4 py-12 text-center flex flex-col items-center">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-plum leading-tight max-w-3xl tracking-tight">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-plum leading-tight max-w-4xl tracking-tight">
           Trying for a Baby for Over 12 Months?
         </h1>
 
-        <h2 className="mt-4 text-xl sm:text-2xl font-semibold text-[#4A2E80] max-w-2xl leading-snug">
+        <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-semibold text-[#4A2E80] max-w-3xl leading-snug">
           IVF or IUI Failed? Reports Say "Everything Is Normal" But Pregnancy Still Isn't Happening?
         </h2>
 
-        <p className="mt-4 text-slate-500 font-medium text-sm sm:text-base max-w-xl">
-          Before you spend on another treatment cycle, discover what might be missed.
+        <p className="mt-4 text-slate-800 font-bold text-base sm:text-lg max-w-xl">
+          <span className="bg-gradient-to-t from-gold-brand/60 to-gold-brand/60 bg-no-repeat bg-[length:100%_40%] bg-bottom px-1">
+            Before you spend on another treatment cycle, discover what might be missed.
+          </span>
         </p>
 
         {/* Video Area */}
         <div className="mt-8 w-full bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 flex flex-col md:flex-row max-w-5xl animate-fade-in">
 
           {/* Main Video Box */}
-          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative aspect-video md:aspect-auto min-h-[280px]">
+          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative h-[350px] md:h-[420px]">
             <div className="absolute inset-0 bg-gradient-to-br from-plum/20 to-black/80 z-0"></div>
             <div className="relative z-10 flex flex-col items-center text-white px-4">
               <span className="bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-3">
@@ -318,7 +343,7 @@ function App() {
           </div>
 
           {/* Right Video Box Partition */}
-          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative aspect-video md:aspect-auto min-h-[280px] border-t md:border-t-0 md:border-l border-slate-700">
+          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative h-[350px] md:h-[420px] border-t md:border-t-0 md:border-l border-slate-700">
             <div className="absolute inset-0 bg-gradient-to-br from-plum/20 to-black/80 z-0"></div>
             <div className="relative z-10 flex flex-col items-center text-white px-4">
               <span className="bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-3">
@@ -338,7 +363,7 @@ function App() {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs font-semibold text-slate-600">
+        <div className="mt-6 flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-base font-semibold text-slate-600">
           <span className="flex items-center gap-1">
             <LockIcon /> Confidential consultation
           </span>
@@ -352,26 +377,26 @@ function App() {
 
         <button
           onClick={scrollToForm}
-          className="mt-8 bg-rose-brand hover:brightness-110 text-white font-bold px-8 py-4 rounded-full text-base sm:text-lg flex items-center shadow-lg transition duration-300 transform hover:scale-[1.02] group relative overflow-hidden justify-center"
+          className="mt-8 bg-rose-brand hover:brightness-110 text-white font-bold px-10 py-5 rounded-full text-lg sm:text-xl flex items-center shadow-lg transition duration-300 transform hover:scale-[1.02] relative overflow-hidden justify-center animate-pulse-pop"
         >
-          <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-150%] group-hover:animate-cta-shine"></span>
-          YES, I WANT CLEAR ANSWERS
+          <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-150%] animate-cta-shine"></span>
+          <span className="relative z-10">YES, I WANT CLEAR ANSWERS</span>
         </button>
 
-        <div className="mt-4 flex items-center justify-center gap-2 text-plum text-xs sm:text-sm font-bold lg:whitespace-nowrap max-w-none mx-auto animate-pulse-pop">
-          <WarningIcon className="text-plum shrink-0" />
+        <div className="mt-4 flex items-center justify-center gap-2 text-red-600 text-xs sm:text-sm font-bold lg:whitespace-nowrap max-w-none mx-auto animate-pulse-pop">
+          <WarningIcon className="text-red-600 shrink-0" />
           <span>Limited consultation slots are filling up quickly - only a few spots in Surat are available this week</span>
         </div>
       </section>
 
       {/* 4. Fact Check Section */}
       <section className="w-full bg-[#FAF6F0] py-16 px-4 flex flex-col items-center border-y border-slate-200">
-        <div className="w-full max-w-4xl">
+        <div className="w-full max-w-5xl">
           <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-plum tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-plum tracking-tight lg:whitespace-nowrap">
               FACT CHECK: What Many Surat Couples Actually Face
             </h2>
-            <p className="mt-2 text-slate-500 max-w-lg mx-auto text-sm sm:text-base">
+            <p className="mt-2 text-slate-500 max-w-2xl mx-auto text-base sm:text-lg lg:whitespace-nowrap">
               The reality many couples face before reaching the right fertility specialist.
             </p>
           </div>
@@ -379,22 +404,22 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {factChecks.map((fact, idx) => (
               <div key={idx} className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex items-start gap-3 hover:translate-y-[-2px] transition duration-300">
-                <div className="w-6 h-6 rounded-full bg-rose-brand/10 flex items-center justify-center shrink-0 mt-0.5">
-                  <span className="text-rose-brand text-xs font-bold">{idx + 1}</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-rose-brand/10 flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="text-rose-brand text-sm font-bold">{idx + 1}</span>
                 </div>
-                <p className="text-slate-700 text-sm font-medium leading-relaxed">{fact}</p>
+                <p className="text-slate-700 text-base font-medium leading-relaxed">{fact}</p>
               </div>
             ))}
           </div>
 
           <div className="mt-12 bg-white/60 backdrop-blur border border-plum/10 rounded-3xl p-6 text-center max-w-2xl mx-auto shadow-sm">
-            <h3 className="text-lg font-bold text-plum">The Real Problem Is Not Always Lack of Treatment</h3>
-            <p className="mt-2 text-slate-600 text-sm sm:text-base leading-relaxed">
+            <h3 className="text-xl sm:text-2xl font-bold text-plum">The Real Problem Is Not Always Lack of Treatment</h3>
+            <p className="mt-2 text-slate-600 text-base sm:text-lg leading-relaxed">
               Sometimes, it is the lack of the right diagnosis, a clear explanation, and a personalised plan tailored to your specific situation.
             </p>
             <button
               onClick={scrollToForm}
-              className="mt-6 text-rose-cta font-bold text-sm inline-flex items-center hover:underline group"
+              className="mt-6 text-rose-cta font-bold text-base inline-flex items-center hover:underline group"
             >
               YES, I WANT CLEAR ANSWERS <ArrowRightIcon />
             </button>
@@ -402,160 +427,30 @@ function App() {
         </div>
       </section>
 
-      {/* 5. Differentiation Section */}
-      <section className="w-full bg-white py-16 px-4 flex flex-col items-center">
-        <div className="w-full max-w-5xl">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-plum tracking-tight">
-              WHY Bavishi Fertility Institute's APPROACH IS DIFFERENT
-            </h2>
-            <p className="mt-2 text-[#4A2E80] font-semibold max-w-xl mx-auto text-sm sm:text-base">
-              This Is Not About Recommending More Treatment. It Is About Recommending the Right Next Step.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
-            {diffSteps.map((step, idx) => (
-              <div
-                key={idx}
-                className={`bg-[#FAF9F5] p-6 rounded-3xl border border-slate-200/80 hover:border-plum/20 hover:shadow-md transition duration-300 flex flex-col h-full ${idx === 3 ? 'md:col-start-2 md:col-span-2' : 'md:col-span-2'
-                  }`}
-              >
-                <div className="w-full h-44 overflow-hidden rounded-2xl mb-4 bg-slate-100 shadow-sm shrink-0">
-                  <img src={step.image} alt={step.title} className={`w-full h-full object-cover transition-transform duration-500 hover:scale-105 ${idx === 1 ? 'object-[center_85%]' : idx === 2 ? 'object-[center_20%]' : idx === 3 ? 'object-[center_10%]' : ''}`} />
-                </div>
-                <h3 className="text-lg font-bold text-plum mb-2">{step.title}</h3>
-                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{step.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 p-5 bg-plum/5 rounded-2xl flex flex-col items-center justify-center gap-2 text-xs sm:text-sm text-plum font-semibold text-center">
-            <div className="flex items-center justify-center gap-2">
-              <InfoIcon className="text-plum shrink-0" />
-              <span>Bavishi Fertility Institute’s official page highlights personalised plans, advanced IVF laboratory systems, privacy protocols, and treatment</span>
-            </div>
-            <span>options across male and female infertility.</span>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. The Comparative Grid */}
-      <section className="w-full bg-[#FAF6F0] py-16 px-4 flex flex-col items-center border-y border-slate-200">
-        <div className="w-full max-w-4xl">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-plum tracking-tight">
-              COMPARE THE JOURNEYS
-            </h2>
-            <p className="mt-2 text-slate-500 text-sm">
-              See how our diagnostic-first approach compares to conventional fertility pipelines.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-            {/* The Usual Journey */}
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-              <h3 className="text-lg font-extrabold text-slate-600 border-b border-slate-100 pb-3 mb-4 flex items-center justify-between">
-                <span>THE USUAL JOURNEY</span>
-                <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Treatment First</span>
-              </h3>
-              <ul className="space-y-3">
-                {compareTable.usual.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-slate-500 text-sm">
-                    <XIcon className="h-5 w-5 text-rose-500 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* The Bavishi Approach */}
-            <div className="bg-white rounded-3xl p-6 border-2 border-plum shadow-md relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-plum text-white text-[10px] font-bold px-3 py-1 uppercase tracking-wider rounded-bl-xl">
-                Bavishi Choice
-              </div>
-              <h3 className="text-lg font-extrabold text-plum border-b border-slate-100 pb-3 mb-4 flex items-center justify-between">
-                <span>BAVISHI'S APPROACH</span>
-                <span className="text-xs font-bold text-plum-light bg-plum/5 px-2 py-0.5 rounded">Understanding First</span>
-              </h3>
-              <ul className="space-y-3">
-                {compareTable.bavishi.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-slate-700 text-sm font-semibold">
-                    <CheckIcon className="h-5 w-5 text-emerald-500 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-10 text-center">
-            <button
-              onClick={scrollToForm}
-              className="bg-plum hover:bg-plum-light text-white font-bold px-6 py-3 rounded-full text-sm sm:text-base shadow-md transition duration-300"
-            >
-              Review My Fertility Case
-            </button>
-            <span className="text-rose-brand text-xs sm:text-sm font-bold block mt-3 text-center animate-pulse-pop">
-              <WarningIcon className="inline-block mr-1.5 text-rose-brand align-text-bottom" />
-              Limited reviewed consultation appointments are available.
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. What Happens Next Section */}
-      <section className="w-full bg-white py-16 px-4 flex flex-col items-center">
-        <div className="w-full max-w-4xl">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-plum tracking-tight">
-              WHAT HAPPENS NEXT?
-            </h2>
-          </div>
-
-          <div className="relative border-l-2 border-slate-200/80 ml-4 md:ml-8 pl-6 md:pl-10 space-y-10 max-w-2xl mx-auto">
-            {stepsNext.map((step, idx) => (
-              <div key={idx} className="relative group">
-                <div className="absolute -left-[45px] md:-left-[57px] top-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-plum text-white flex items-center justify-center font-bold text-sm md:text-base shadow border-2 border-white">
-                  {step.num}
-                </div>
-                <h3 className="text-lg font-bold text-plum group-hover:text-plum-light transition mb-1">{step.title}</h3>
-                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{step.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <button
-              onClick={scrollToForm}
-              className="bg-rose-brand hover:brightness-110 text-white font-bold px-8 py-3 rounded-full text-base shadow-md transition inline-flex items-center justify-center"
-            >
-              <span>Start My Case Review</span>
-            </button>
-            <span className="text-plum text-xs sm:text-sm font-bold block mt-3 text-center animate-pulse-pop">
-              <WarningIcon className="inline-block mr-1.5 text-plum align-text-bottom" />
-              Your appointment is confirmed only after the initial information is reviewed.
-            </span>
-          </div>
-        </div>
-      </section>
-
       {/* 8. Testimonials Section */}
-      <section className="w-full bg-[#FAF6F0] py-16 px-4 flex flex-col items-center border-y border-slate-200">
-        <div className="w-full max-w-4xl">
+      <section className="w-full bg-[#FAF6F0] py-16 flex flex-col items-center border-y border-slate-200 overflow-hidden">
+        <div className="w-full max-w-[1300px] px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-plum tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-plum tracking-tight">
               REAL COUPLES. REAL JOURNEYS. REAL HOPE.
             </h2>
-            <p className="mt-2 text-slate-500 text-sm">
+            <p className="mt-2 text-slate-500 text-base sm:text-lg">
               Watch reviews and recovery stories from couples who found clarity with us.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div 
+            ref={carouselRef}
+            onMouseEnter={() => setIsCarouselHovered(true)}
+            onMouseLeave={() => setIsCarouselHovered(false)}
+            onTouchStart={() => setIsCarouselHovered(true)}
+            onTouchEnd={() => setIsCarouselHovered(false)}
+            className="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory px-4 -mx-4 sm:px-0 sm:mx-0"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
             {testimonials.map((t, idx) => (
-              <div key={idx} className="bg-white rounded-3xl p-4 border border-slate-200 shadow-sm flex flex-col">
-                <div className="aspect-video w-full rounded-2xl overflow-hidden bg-slate-900 border border-slate-100">
+              <div key={idx} className={`bg-white rounded-3xl p-4 border border-slate-200 shadow-sm flex flex-col shrink-0 snap-center ${t.type === 'short' ? 'w-[260px]' : 'w-[320px] sm:w-[400px]'}`}>
+                <div className={`w-full rounded-2xl overflow-hidden bg-slate-900 border border-slate-100 ${t.type === 'short' ? 'aspect-[9/16]' : 'aspect-video'}`}>
                   <iframe
                     className="w-full h-full"
                     src={`https://www.youtube.com/embed/${t.id}`}
@@ -569,7 +464,7 @@ function App() {
                   <span className="text-rose-cta text-[10px] font-bold uppercase tracking-wider block mb-1">
                     {t.subtitle}
                   </span>
-                  <h3 className="text-slate-800 font-bold text-sm sm:text-base leading-snug">
+                  <h3 className="text-slate-800 font-bold text-sm sm:text-base leading-snug truncate">
                     {t.title}
                   </h3>
                 </div>
@@ -579,27 +474,161 @@ function App() {
         </div>
       </section>
 
-      {/* 9. FAQs Section */}
+      {/* 5. Differentiation Section */}
       <section className="w-full bg-white py-16 px-4 flex flex-col items-center">
+        <div className="w-full max-w-5xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-plum tracking-tight">
+              WHY Bavishi Fertility Institute's APPROACH IS DIFFERENT
+            </h2>
+            <p className="mt-2 text-[#4A2E80] font-semibold max-w-xl mx-auto text-base sm:text-lg">
+              This Is Not About Recommending More Treatment. It Is About Recommending the Right Next Step.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-6">
+            {diffSteps.map((step, idx) => (
+              <div
+                key={idx}
+                className="bg-[#FAF9F5] w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-8 rounded-3xl border border-slate-200/80 hover:border-plum/40 hover:shadow-xl transition-all duration-500 flex flex-col relative overflow-hidden group"
+              >
+                <div className="relative z-10 flex-grow">
+                  <div className="w-12 h-12 rounded-xl bg-plum text-white flex items-center justify-center font-bold text-xl mb-6 shadow-md transition-transform duration-300 group-hover:-translate-y-1">
+                    {idx + 1}
+                  </div>
+                  <h3 className="text-xl font-bold text-plum mb-3 leading-tight">{step.title}</h3>
+                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed">{step.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+        
+        <div className="mt-10 w-full max-w-[1200px] p-5 bg-plum/5 rounded-2xl text-sm sm:text-base text-plum font-semibold text-center">
+          <p className="max-w-none mx-auto lg:whitespace-nowrap">
+            <InfoIcon className="inline-block mr-2 align-text-bottom text-plum" />
+            Bavishi Fertility Institute’s official page highlights personalised plans, advanced IVF laboratory systems, privacy protocols, and treatment <br className="hidden lg:block" /> options across male and female infertility.
+          </p>
+        </div>
+      </section>
+
+      {/* 6. The Comparative Grid */}
+      <section className="w-full bg-[#FAF6F0] py-16 px-4 flex flex-col items-center border-y border-slate-200">
+        <div className="w-full max-w-4xl">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-plum tracking-tight">
+              COMPARE THE JOURNEYS
+            </h2>
+            <p className="mt-2 text-slate-500 text-base sm:text-lg">
+              See how our diagnostic-first approach compares to conventional fertility pipelines.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* The Usual Journey */}
+            <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+              <h3 className="text-xl font-extrabold text-slate-600 border-b border-slate-100 pb-3 mb-4 flex items-center justify-between">
+                <span>THE USUAL JOURNEY</span>
+                <span className="text-sm font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Treatment First</span>
+              </h3>
+              <ul className="space-y-4">
+                {compareTable.usual.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-slate-500 text-base">
+                    <XIcon className="h-6 w-6 text-rose-500 shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* The Bavishi Approach */}
+            <div className="bg-white rounded-3xl p-8 border-2 border-plum shadow-md relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-plum text-white text-xs font-bold px-4 py-1.5 uppercase tracking-wider rounded-bl-2xl">
+                Bavishi Choice
+              </div>
+              <h3 className="text-xl font-extrabold text-plum border-b border-slate-100 pb-3 mb-4 flex items-center justify-between">
+                <span>BAVISHI'S APPROACH</span>
+                <span className="text-sm font-bold text-plum-light bg-plum/5 px-2 py-0.5 rounded">Understanding First</span>
+              </h3>
+              <ul className="space-y-4">
+                {compareTable.bavishi.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-slate-700 text-base font-semibold">
+                    <CheckIcon className="h-6 w-6 text-emerald-500 shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-10 text-center">
+            <button
+              onClick={scrollToForm}
+              className="bg-plum hover:bg-plum-light text-white font-bold px-10 py-5 rounded-full text-lg sm:text-xl shadow-md transition duration-300 relative overflow-hidden animate-pulse-pop"
+            >
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-150%] animate-cta-shine" style={{ animationDelay: '0.5s' }}></span>
+              <span className="relative z-10">Review My Fertility Case</span>
+            </button>
+            <span className="text-red-600 text-xs sm:text-sm font-bold block mt-3 text-center animate-pulse-pop">
+              <WarningIcon className="inline-block mr-1.5 text-red-600 align-text-bottom" />
+              Limited reviewed consultation appointments are available.
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. What Happens Next Section */}
+      <section className="w-full bg-white py-16 px-4 flex flex-col items-center">
+        <div className="w-full max-w-[1300px]">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-plum tracking-tight">
+              WHAT HAPPENS NEXT?
+            </h2>
+          </div>
+
+          <div className="relative grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-4 max-w-full mx-auto px-4 md:px-0">
+            {/* Horizontal Line for Desktop */}
+            <div className="hidden md:block absolute top-[22px] left-[10%] right-[10%] h-0.5 bg-plum/20 z-0"></div>
+            
+            {stepsNext.map((step, idx) => (
+              <div key={idx} className="relative group flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-plum text-white flex items-center justify-center font-bold text-lg shadow-md border-4 border-white relative z-10 mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:bg-plum-light">
+                  {step.num}
+                </div>
+                <h3 className="text-lg xl:text-xl font-bold text-plum group-hover:text-plum-light transition mb-3 px-2">{step.title}</h3>
+                <p className="text-slate-600 text-sm leading-relaxed px-1">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+
+
+        </div>
+      </section>
+
+
+
+      {/* 9. FAQs Section */}
+      <section className="w-full bg-[#FAF6F0] py-16 px-4 flex flex-col items-center border-y border-slate-200">
         <div className="w-full max-w-3xl">
           <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-plum tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-plum tracking-tight">
               FREQUENTLY ASKED QUESTIONS
             </h2>
           </div>
 
           <div className="space-y-3">
             {faqs.map((faq, idx) => (
-              <div key={idx} className="bg-[#FAF9F5] border border-slate-200/80 rounded-2xl overflow-hidden transition duration-300">
+              <div key={idx} className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden transition duration-300 shadow-sm">
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full p-5 text-left font-bold text-slate-800 hover:text-plum flex justify-between items-center gap-4 text-sm sm:text-base"
+                  className="w-full p-5 text-left font-bold text-slate-800 hover:text-plum flex justify-between items-center gap-4 text-base sm:text-lg"
                 >
                   <span>{faq.q}</span>
                   <ChevronDownIcon className={`h-5 w-5 transform transition-transform shrink-0 ${openFaq === idx ? 'rotate-180 text-plum' : 'text-slate-400'}`} />
                 </button>
                 {openFaq === idx && (
-                  <div className="p-5 pt-0 text-slate-600 text-xs sm:text-sm leading-relaxed border-t border-slate-200/40 bg-white">
+                  <div className="p-5 pt-0 text-slate-600 text-sm sm:text-base leading-relaxed border-t border-slate-200/40 bg-white">
                     {faq.a}
                   </div>
                 )}
@@ -614,15 +643,15 @@ function App() {
         <div className="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/5 blur-3xl"></div>
         <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-white/5 blur-3xl"></div>
 
-        <div className="w-full max-w-lg text-center relative z-10">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
+        <div className="w-full max-w-3xl text-center relative z-10">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
             The Sound of a Child in Your Home  It's Not Just a Dream.
           </h2>
-          <p className="mt-4 text-slate-300 text-xs sm:text-sm max-w-md mx-auto">
-            One consultation in Surat. No payment. No pressure. Just a real conversation with a doctor who will finally give you a straight answer.
+          <p className="mt-4 text-slate-300 text-sm sm:text-base max-w-2xl mx-auto px-2">
+            One consultation in Surat. No payment. No pressure. <br className="hidden sm:block" />Just a real conversation with a doctor who will finally give you a straight answer.
           </p>
 
-          <div className="mt-8 bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl text-left border border-white/10">
+          <div className="mt-8 bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl text-left border border-white/10 max-w-lg mx-auto">
             {formSubmitted ? (
               <div className="text-center py-8">
                 <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 border border-emerald-200">
@@ -720,7 +749,7 @@ function App() {
             )}
           </div>
 
-          <div className="mt-8 text-xs text-slate-300 space-y-1">
+          <div className="mt-8 text-sm sm:text-base text-slate-300 space-y-1">
             <p>During the consultation, we will carefully understand your situation.</p>
             <p>If we are not right for you, we will tell you in plain words and suggest other options.</p>
           </div>
@@ -728,15 +757,15 @@ function App() {
       </section>
 
       {/* 11. Footer */}
-      <footer className="w-full max-w-6xl border-t border-slate-200 bg-white px-6 py-8 text-center text-xs text-slate-600 space-y-3 mb-16 sm:mb-0">
+      <footer className="w-full max-w-6xl border-t border-slate-200 bg-white px-6 py-8 text-center text-sm text-slate-600 space-y-4 mb-16 sm:mb-0">
         <div className="flex justify-center gap-2">
           <StarIcon /><StarIcon /><StarIcon /><StarIcon /><StarIcon />
         </div>
-        <p className="font-semibold text-slate-700">Bavishi Fertility Institute - Surat Branch</p>
-        <p className="max-w-md mx-auto leading-relaxed text-slate-600">
-          Paldi Cross Roads, Opp. Manjulal Municipal Garden, Paldi, Ahmedabad (Headquarters) | Surat Branch: Ring Road, Surat, Gujarat.
+        <p className="font-semibold text-slate-700 text-base sm:text-lg">Bavishi Fertility Institute - Surat Branch</p>
+        <p className="max-w-2xl mx-auto leading-relaxed text-slate-600 text-sm sm:text-base">
+          Paldi Cross Roads, Opp. Manjulal Municipal Garden, Paldi, Ahmedabad (Headquarters)  Surat Branch: Ring Road, Surat, Gujarat.
         </p>
-        <p className="text-[10px] text-slate-500 mt-4">
+        <p className="text-xs sm:text-sm text-slate-500 mt-4">
           © {new Date().getFullYear()} Bavishi Fertility Institute. All Rights Reserved. India's Trusted IVF Experts.
         </p>
       </footer>
