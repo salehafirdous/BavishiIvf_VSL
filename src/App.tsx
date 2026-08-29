@@ -56,8 +56,8 @@ const LockIcon = ({ className = "text-gold-brand" }: { className?: string }) => 
   </svg>
 );
 
-const ArrowRightIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+const ArrowRightIcon = ({ className = "h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
   </svg>
 );
@@ -100,7 +100,7 @@ function App() {
 
   useEffect(() => {
     if (isCarouselHovered) return;
-    
+
     const interval = setInterval(() => {
       if (carouselRef.current) {
         const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
@@ -285,19 +285,11 @@ function App() {
           <img src={logo} alt="Bavishi Fertility Institute" className="h-10 sm:h-12 w-auto object-contain" />
         </div>
         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm font-medium">
-          <div className="flex items-center gap-1.5 text-slate-700 font-bold">
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Surat Centre Active</span>
-          </div>
-          <a href="tel:+919712622288" className="flex items-center gap-1.5 text-plum font-bold hover:text-plum-light transition">
-            <PhoneIcon className="h-5 w-5 text-plum shrink-0" />
-            <span>+91 97126 22288</span>
-          </a>
           <button
             onClick={scrollToForm}
-            className="bg-rose-brand hover:brightness-110 text-white font-bold px-5 py-2.5 rounded-full text-xs transition shadow-sm flex items-center gap-1.5 duration-300"
+            className="bg-rose-brand hover:brightness-110 text-white font-bold px-6 py-3 rounded-full text-sm transition shadow-md hidden md:flex items-center gap-2 duration-300"
           >
-            <CalendarIcon className="h-4.5 w-4.5 text-white shrink-0" />
+            <CalendarIcon className="h-5 w-5 text-white shrink-0" />
             <span>Book Appointment</span>
           </button>
         </div>
@@ -320,15 +312,15 @@ function App() {
         </p>
 
         {/* Video Area */}
-        <div className="mt-8 w-full bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 flex flex-col md:flex-row max-w-5xl animate-fade-in">
+        <div className="mt-8 w-full bg-white rounded-3xl shadow-xl border border-slate-200 flex flex-col md:flex-row max-w-5xl animate-fade-in divide-y-4 md:divide-y-0 md:divide-x-4 divide-slate-100">
 
           {/* Main Video Box */}
-          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative h-[350px] md:h-[420px]">
-            <div className="absolute inset-0 bg-gradient-to-br from-plum/20 to-black/80 z-0"></div>
+          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative h-[350px] md:h-[420px] rounded-t-[1.4rem] md:rounded-tr-none md:rounded-l-[1.4rem]">
+            <span className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-4 py-1.5 rounded-full z-20 shadow-md whitespace-nowrap border-2 border-white">
+              Hindi Version
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-br from-plum/20 to-black/80 z-0 rounded-t-[1.4rem] md:rounded-tr-none md:rounded-l-[1.4rem]"></div>
             <div className="relative z-10 flex flex-col items-center text-white px-4">
-              <span className="bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-3">
-                Hindi Version
-              </span>
               <div className="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center border border-white/20 mb-4 backdrop-blur-sm cursor-not-allowed">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white/50 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -343,12 +335,12 @@ function App() {
           </div>
 
           {/* Right Video Box Partition */}
-          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative h-[350px] md:h-[420px] border-t md:border-t-0 md:border-l border-slate-700">
-            <div className="absolute inset-0 bg-gradient-to-br from-plum/20 to-black/80 z-0"></div>
+          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative h-[350px] md:h-[420px] border-t md:border-t-0 md:border-l border-slate-700 rounded-b-[1.4rem] md:rounded-bl-none md:rounded-r-[1.4rem]">
+            <span className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-4 py-1.5 rounded-full z-20 shadow-md whitespace-nowrap border-2 border-white">
+              Gujarati Version
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-br from-plum/20 to-black/80 z-0 rounded-b-[1.4rem] md:rounded-bl-none md:rounded-r-[1.4rem]"></div>
             <div className="relative z-10 flex flex-col items-center text-white px-4">
-              <span className="bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-3">
-                Gujarati Version
-              </span>
               <div className="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center border border-white/20 mb-4 backdrop-blur-sm cursor-not-allowed">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white/50 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -377,10 +369,13 @@ function App() {
 
         <button
           onClick={scrollToForm}
-          className="mt-8 bg-rose-brand hover:brightness-110 text-white font-bold px-10 py-5 rounded-full text-lg sm:text-xl flex items-center shadow-lg transition duration-300 transform hover:scale-[1.02] relative overflow-hidden justify-center animate-pulse-pop"
+          className="mt-8 bg-rose-brand hover:brightness-110 text-white font-bold px-10 py-5 rounded-full text-lg sm:text-xl flex items-center shadow-lg transition duration-300 transform hover:scale-[1.02] relative overflow-hidden justify-center animate-pulse-pop group"
         >
           <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-150%] animate-cta-shine"></span>
-          <span className="relative z-10">YES, I WANT CLEAR ANSWERS</span>
+          <span className="relative z-10 flex items-center justify-center gap-2 whitespace-nowrap">
+            YES, I WANT CLEAR ANSWERS
+            <ArrowRightIcon className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />
+          </span>
         </button>
 
         <div className="mt-4 flex items-center justify-center gap-2 text-red-600 text-xs sm:text-sm font-bold lg:whitespace-nowrap max-w-none mx-auto animate-pulse-pop">
@@ -412,16 +407,20 @@ function App() {
             ))}
           </div>
 
-          <div className="mt-12 bg-white/60 backdrop-blur border border-plum/10 rounded-3xl p-6 text-center max-w-2xl mx-auto shadow-sm">
+          <div className="mt-12 bg-rose-50/80 backdrop-blur border border-rose-100 rounded-3xl p-6 text-center max-w-2xl mx-auto shadow-sm">
             <h3 className="text-xl sm:text-2xl font-bold text-plum">The Real Problem Is Not Always Lack of Treatment</h3>
             <p className="mt-2 text-slate-600 text-base sm:text-lg leading-relaxed">
               Sometimes, it is the lack of the right diagnosis, a clear explanation, and a personalised plan tailored to your specific situation.
             </p>
             <button
               onClick={scrollToForm}
-              className="mt-6 text-rose-cta font-bold text-base inline-flex items-center hover:underline group"
+              className="mt-6 bg-rose-brand hover:brightness-110 text-white font-bold px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-[13px] sm:text-lg shadow-md transition inline-flex items-center justify-center relative overflow-hidden animate-pulse-pop group w-[95%] sm:w-auto max-w-full"
             >
-              YES, I WANT CLEAR ANSWERS <ArrowRightIcon />
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-150%] animate-cta-shine"></span>
+              <span className="relative z-10 flex items-center justify-center gap-1.5 whitespace-nowrap">
+                YES, I WANT CLEAR ANSWERS
+                <ArrowRightIcon className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />
+              </span>
             </button>
           </div>
         </div>
@@ -439,7 +438,7 @@ function App() {
             </p>
           </div>
 
-          <div 
+          <div
             ref={carouselRef}
             onMouseEnter={() => setIsCarouselHovered(true)}
             onMouseLeave={() => setIsCarouselHovered(false)}
@@ -504,7 +503,7 @@ function App() {
           </div>
 
         </div>
-        
+
         <div className="mt-10 w-full max-w-[1200px] p-5 bg-plum/5 rounded-2xl text-sm sm:text-base text-plum font-semibold text-center">
           <p className="max-w-none mx-auto lg:whitespace-nowrap">
             <InfoIcon className="inline-block mr-2 align-text-bottom text-plum" />
@@ -529,7 +528,7 @@ function App() {
             {/* The Usual Journey */}
             <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
               <h3 className="text-xl font-extrabold text-slate-600 border-b border-slate-100 pb-3 mb-4 flex items-center justify-between">
-                <span>THE USUAL JOURNEY</span>
+                <span>THE USUAL FERTILITY JOURNEY</span>
                 <span className="text-sm font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Treatment First</span>
               </h3>
               <ul className="space-y-4">
@@ -544,12 +543,13 @@ function App() {
 
             {/* The Bavishi Approach */}
             <div className="bg-white rounded-3xl p-8 border-2 border-plum shadow-md relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-plum text-white text-xs font-bold px-4 py-1.5 uppercase tracking-wider rounded-bl-2xl">
-                Bavishi Choice
-              </div>
-              <h3 className="text-xl font-extrabold text-plum border-b border-slate-100 pb-3 mb-4 flex items-center justify-between">
-                <span>BAVISHI'S APPROACH</span>
-                <span className="text-sm font-bold text-plum-light bg-plum/5 px-2 py-0.5 rounded">Understanding First</span>
+              <h3 className="text-xl font-extrabold text-plum border-b border-slate-100 pb-3 mb-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <span className="leading-tight">
+                  THE BAVISHI FERTILITY <br /> INSTITUTE’S APPROACH
+                </span>
+                <span className="text-sm font-bold text-plum-light bg-plum/5 px-3 py-1 rounded self-start md:self-auto shrink-0">
+                  Understanding First
+                </span>
               </h3>
               <ul className="space-y-4">
                 {compareTable.bavishi.map((item, idx) => (
@@ -565,10 +565,13 @@ function App() {
           <div className="mt-10 text-center">
             <button
               onClick={scrollToForm}
-              className="bg-plum hover:bg-plum-light text-white font-bold px-10 py-5 rounded-full text-lg sm:text-xl shadow-md transition duration-300 relative overflow-hidden animate-pulse-pop"
+              className="bg-plum hover:bg-plum-light text-white font-bold px-10 py-5 rounded-full text-lg sm:text-xl shadow-md transition duration-300 relative overflow-hidden animate-pulse-pop group"
             >
               <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-150%] animate-cta-shine" style={{ animationDelay: '0.5s' }}></span>
-              <span className="relative z-10">Review My Fertility Case</span>
+              <span className="relative z-10 flex items-center justify-center gap-2 whitespace-nowrap">
+                Review My Fertility Case
+                <ArrowRightIcon className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />
+              </span>
             </button>
             <span className="text-red-600 text-xs sm:text-sm font-bold block mt-3 text-center animate-pulse-pop">
               <WarningIcon className="inline-block mr-1.5 text-red-600 align-text-bottom" />
@@ -590,7 +593,7 @@ function App() {
           <div className="relative grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-4 max-w-full mx-auto px-4 md:px-0">
             {/* Horizontal Line for Desktop */}
             <div className="hidden md:block absolute top-[22px] left-[10%] right-[10%] h-0.5 bg-plum/20 z-0"></div>
-            
+
             {stepsNext.map((step, idx) => (
               <div key={idx} className="relative group flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-full bg-plum text-white flex items-center justify-center font-bold text-lg shadow-md border-4 border-white relative z-10 mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:bg-plum-light">
@@ -736,9 +739,13 @@ function App() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full bg-rose-cta hover:bg-rose-cta/90 text-white font-bold py-3.5 rounded-xl text-base shadow-lg transition duration-200 mt-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  className={`w-full bg-rose-cta hover:bg-rose-cta/90 text-white font-bold py-3.5 rounded-xl text-base shadow-lg transition duration-200 mt-2 group relative overflow-hidden flex items-center justify-center gap-2 animate-pulse-pop ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                 >
-                  {isSubmitting ? 'Submitting...' : 'Book My Free Consultation'}
+                  {!isSubmitting && <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-150%] animate-cta-shine"></span>}
+                  <span className="relative z-10 flex items-center gap-2 whitespace-nowrap">
+                    {isSubmitting ? 'Submitting...' : 'Book My Consultation'}
+                    {!isSubmitting && <ArrowRightIcon className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />}
+                  </span>
                 </button>
 
                 <span className="text-[10px] text-slate-400 flex items-center justify-center gap-1 mt-2">
@@ -788,7 +795,7 @@ function App() {
       {/* 13. Floating Action Sidebar (Desktop/Tablet Only) */}
       <div className="fixed right-0 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-end gap-3 pr-3 md:flex">
         <a
-          href="https://wa.me/919712522289"
+          href="https://wa.me/917387016648"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp Us"
@@ -803,7 +810,7 @@ function App() {
         </a>
 
         <a
-          href="tel:+919712622288"
+          href="tel:+917387016648"
           aria-label="Call Us"
           className="group flex items-center overflow-hidden rounded-full bg-plum text-white shadow-lg outline-none transition-[filter,transform] duration-300 hover:brightness-110 active:scale-95"
         >
@@ -830,11 +837,23 @@ function App() {
       </div>
 
       {/* 14. Scroll to Top Button */}
+      {/* Mobile WhatsApp Floating Button */}
+      <a
+        href="https://wa.me/917387016648"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="WhatsApp Us"
+        className="fixed bottom-20 right-4 h-12 w-12 rounded-full bg-[#25D366] text-white shadow-lg flex md:hidden items-center justify-center transition-all duration-300 active:scale-95 z-50 animate-fade-in"
+      >
+        <WhatsAppIcon className="h-6 w-6 text-white" />
+      </a>
+
+      {/* 14. Scroll to Top Button (Desktop Only) */}
       {showScrollTop && (
         <button
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 h-12 w-12 rounded-full bg-rose-brand text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:brightness-110 active:scale-95 z-50 cursor-pointer animate-fade-in"
+          className="fixed bottom-6 right-6 h-12 w-12 rounded-full bg-rose-brand text-white shadow-lg hidden md:flex items-center justify-center transition-all duration-300 hover:brightness-110 active:scale-95 z-50 cursor-pointer animate-fade-in"
         >
           <ArrowUpIcon className="h-5 w-5 text-white" />
         </button>
