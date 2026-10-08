@@ -317,43 +317,33 @@ function App() {
         <div className="mt-8 w-full bg-white rounded-3xl shadow-xl border border-slate-200 flex flex-col md:flex-row max-w-5xl animate-fade-in divide-y-4 md:divide-y-0 md:divide-x-4 divide-slate-100">
 
           {/* Main Video Box */}
-          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative h-[350px] md:h-[420px] rounded-t-[1.4rem] md:rounded-tr-none md:rounded-l-[1.4rem]">
+          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative aspect-video md:aspect-auto md:h-[420px] rounded-t-[1.4rem] md:rounded-tr-none md:rounded-l-[1.4rem]">
             <span className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-4 py-1.5 rounded-full z-20 shadow-md whitespace-nowrap border-2 border-white">
               Hindi Version
             </span>
-            <div className="absolute inset-0 bg-gradient-to-br from-plum/20 to-black/80 z-0 rounded-t-[1.4rem] md:rounded-tr-none md:rounded-l-[1.4rem]"></div>
-            <div className="relative z-10 flex flex-col items-center text-white px-4">
-              <div className="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center border border-white/20 mb-4 backdrop-blur-sm cursor-not-allowed">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white/50 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold">Watch This 5-Minute Doctor Video</h3>
-              <p className="text-xs text-slate-300 mt-2 max-w-xs">
-                Dr. Bavishi explains why you may not need another cycle right away, but a clearer diagnosis.
-              </p>
-            </div>
+            <video
+              className="absolute inset-0 w-full h-full object-contain md:object-cover rounded-t-[1.4rem] md:rounded-tr-none md:rounded-l-[1.4rem] z-10"
+              controls
+              playsInline
+            >
+              <source src="/bavishi%20video%20logo%20changed.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
 
           {/* Right Video Box Partition */}
-          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative h-[350px] md:h-[420px] border-t md:border-t-0 md:border-l border-slate-700 rounded-b-[1.4rem] md:rounded-bl-none md:rounded-r-[1.4rem]">
+          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative aspect-video md:aspect-auto md:h-[420px] border-t md:border-t-0 md:border-l border-slate-700 rounded-b-[1.4rem] md:rounded-bl-none md:rounded-r-[1.4rem]">
             <span className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-4 py-1.5 rounded-full z-20 shadow-md whitespace-nowrap border-2 border-white">
               Gujarati Version
             </span>
-            <div className="absolute inset-0 bg-gradient-to-br from-plum/20 to-black/80 z-0 rounded-b-[1.4rem] md:rounded-bl-none md:rounded-r-[1.4rem]"></div>
-            <div className="relative z-10 flex flex-col items-center text-white px-4">
-              <div className="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center border border-white/20 mb-4 backdrop-blur-sm cursor-not-allowed">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white/50 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold">Watch This 5-Minute Doctor Video</h3>
-              <p className="text-xs text-slate-300 mt-2 max-w-xs">
-                Dr. Bavishi explains why you may not need another cycle right away, but a clearer diagnosis.
-              </p>
-            </div>
+            <video
+              className="absolute inset-0 w-full h-full object-contain md:object-cover rounded-b-[1.4rem] md:rounded-bl-none md:rounded-r-[1.4rem] z-10"
+              controls
+              playsInline
+            >
+              <source src="/Bavishi%20all%20changes%20done.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
 
