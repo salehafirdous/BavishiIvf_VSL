@@ -314,36 +314,53 @@ function App() {
         </p>
 
         {/* Video Area */}
-        <div className="mt-8 w-full bg-white rounded-3xl shadow-xl border border-slate-200 flex flex-col md:flex-row max-w-5xl animate-fade-in divide-y-4 md:divide-y-0 md:divide-x-4 divide-slate-100">
+        {/* Outer wrapper: relative so desktop badges can anchor here. No overflow-hidden so badges float above top edge. */}
+        <div className="mt-8 w-full bg-transparent flex flex-col gap-6 md:gap-0 md:bg-white md:rounded-3xl md:shadow-xl md:border md:border-slate-200 md:flex-row max-w-5xl animate-fade-in md:divide-x-4 divide-slate-100 relative">
+
+          {/* Desktop-only badges anchored to outer wrapper so they are never clipped */}
+          <span className="hidden md:block absolute top-0 left-1/4 -translate-x-1/2 -translate-y-1/2 bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-4 py-1.5 rounded-full z-30 shadow-md whitespace-nowrap border-2 border-white">
+            Hindi Version
+          </span>
+          <span className="hidden md:block absolute top-0 left-3/4 -translate-x-1/2 -translate-y-1/2 bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-4 py-1.5 rounded-full z-30 shadow-md whitespace-nowrap border-2 border-white">
+            Gujarati Version
+          </span>
 
           {/* Main Video Box */}
-          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative aspect-video md:aspect-auto md:h-[420px] rounded-t-[1.4rem] md:rounded-tr-none md:rounded-l-[1.4rem]">
-            <span className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-4 py-1.5 rounded-full z-20 shadow-md whitespace-nowrap border-2 border-white">
+          <div className="flex-1 relative aspect-video md:aspect-auto md:h-[420px] shadow-xl md:shadow-none">
+            {/* Mobile-only badge — sits on outer wrapper so it is never clipped */}
+            <span className="md:hidden absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-4 py-1.5 rounded-full z-20 shadow-md whitespace-nowrap border-2 border-white">
               Hindi Version
             </span>
-            <video
-              className="absolute inset-0 w-full h-full object-contain md:object-cover rounded-t-[1.4rem] md:rounded-tr-none md:rounded-l-[1.4rem] z-10"
-              controls
-              playsInline
-            >
-              <source src="/bavishi%20video%20logo%20changed.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            {/* Inner clip div — rounds ALL 4 corners on mobile, correct desktop corners */}
+            <div className="absolute inset-0 bg-slate-950 rounded-[1.4rem] md:rounded-tr-none md:rounded-br-none md:rounded-l-3xl overflow-hidden">
+              <video
+                className="w-full h-full object-contain md:object-cover"
+                controls
+                playsInline
+              >
+                <source src="/bavishi%20video%20logo%20changed.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
           </div>
 
           {/* Right Video Box Partition */}
-          <div className="flex-1 bg-slate-950 p-6 flex flex-col justify-center items-center text-center relative aspect-video md:aspect-auto md:h-[420px] border-t md:border-t-0 md:border-l border-slate-700 rounded-b-[1.4rem] md:rounded-bl-none md:rounded-r-[1.4rem]">
-            <span className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-4 py-1.5 rounded-full z-20 shadow-md whitespace-nowrap border-2 border-white">
+          <div className="flex-1 relative aspect-video md:aspect-auto md:h-[420px] shadow-xl md:shadow-none">
+            {/* Mobile-only badge — sits on outer wrapper so it is never clipped */}
+            <span className="md:hidden absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-rose-cta text-white text-[10px] font-bold tracking-widest uppercase px-4 py-1.5 rounded-full z-20 shadow-md whitespace-nowrap border-2 border-white">
               Gujarati Version
             </span>
-            <video
-              className="absolute inset-0 w-full h-full object-contain md:object-cover rounded-b-[1.4rem] md:rounded-bl-none md:rounded-r-[1.4rem] z-10"
-              controls
-              playsInline
-            >
-              <source src="/Bavishi%20all%20changes%20done.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            {/* Inner clip div — rounds ALL 4 corners on mobile, correct desktop corners */}
+            <div className="absolute inset-0 bg-slate-950 rounded-[1.4rem] md:rounded-tl-none md:rounded-bl-none md:rounded-r-3xl overflow-hidden">
+              <video
+                className="w-full h-full object-contain md:object-cover"
+                controls
+                playsInline
+              >
+                <source src="/Bavishi%20all%20changes%20done.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
           </div>
         </div>
 
@@ -648,89 +665,89 @@ function App() {
 
           <div className="mt-8 bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl text-left border border-white/10 max-w-lg mx-auto">
             <form onSubmit={handleFormSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  Your Name *
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder="Enter your full name"
+                  className="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-plum transition"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  Phone Number *
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  required
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="Enter 10-digit mobile number"
+                  className="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-plum transition"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
-                    Your Name *
+                    Trying Duration
                   </label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    value={formData.name}
+                  <select
+                    name="duration"
+                    value={formData.duration}
                     onChange={handleInputChange}
-                    placeholder="Enter your full name"
-                    className="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-plum transition"
-                  />
+                    className="w-full border border-slate-300 bg-white rounded-xl px-3 py-2.5 text-sm outline-none focus:border-plum transition"
+                  >
+                    <option value="Under 12 months">Under 12 months</option>
+                    <option value="1-2 years">1–2 years</option>
+                    <option value="2-3 years">2–3 years</option>
+                    <option value="Over 3 years">Over 3 years</option>
+                  </select>
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
-                    Phone Number *
+                    Prior Treatment
                   </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    required
-                    value={formData.phone}
+                  <select
+                    name="priorTreatment"
+                    value={formData.priorTreatment}
                     onChange={handleInputChange}
-                    placeholder="Enter 10-digit mobile number"
-                    className="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-plum transition"
-                  />
+                    className="w-full border border-slate-300 bg-white rounded-xl px-3 py-2.5 text-sm outline-none focus:border-plum transition"
+                  >
+                    <option value="none">None</option>
+                    <option value="iui">IUI Failed</option>
+                    <option value="ivf">IVF Failed</option>
+                    <option value="other">Other Treatments</option>
+                  </select>
                 </div>
+              </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
-                      Trying Duration
-                    </label>
-                    <select
-                      name="duration"
-                      value={formData.duration}
-                      onChange={handleInputChange}
-                      className="w-full border border-slate-300 bg-white rounded-xl px-3 py-2.5 text-sm outline-none focus:border-plum transition"
-                    >
-                      <option value="Under 12 months">Under 12 months</option>
-                      <option value="1-2 years">1–2 years</option>
-                      <option value="2-3 years">2–3 years</option>
-                      <option value="Over 3 years">Over 3 years</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
-                      Prior Treatment
-                    </label>
-                    <select
-                      name="priorTreatment"
-                      value={formData.priorTreatment}
-                      onChange={handleInputChange}
-                      className="w-full border border-slate-300 bg-white rounded-xl px-3 py-2.5 text-sm outline-none focus:border-plum transition"
-                    >
-                      <option value="none">None</option>
-                      <option value="iui">IUI Failed</option>
-                      <option value="ivf">IVF Failed</option>
-                      <option value="other">Other Treatments</option>
-                    </select>
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`w-full bg-rose-cta hover:bg-rose-cta/90 text-white font-bold py-3.5 rounded-xl text-base shadow-lg transition duration-200 mt-2 group relative overflow-hidden flex items-center justify-center gap-2 animate-pulse-pop ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
-                >
-                  {!isSubmitting && <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-150%] animate-cta-shine"></span>}
-                  <span className="relative z-10 flex items-center gap-2 whitespace-nowrap">
-                    {isSubmitting ? 'Submitting...' : 'Book My Consultation'}
-                    {!isSubmitting && <ArrowRightIcon className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />}
-                  </span>
-                </button>
-
-                <span className="text-[10px] text-slate-400 flex items-center justify-center gap-1 mt-2">
-                  <LockIcon className="text-slate-400 h-3.5 w-3.5 inline shrink-0" />
-                  <span>Your data is fully encrypted and private. We make no false promises.</span>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full bg-rose-cta hover:bg-rose-cta/90 text-white font-bold py-3.5 rounded-xl text-base shadow-lg transition duration-200 mt-2 group relative overflow-hidden flex items-center justify-center gap-2 animate-pulse-pop ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+              >
+                {!isSubmitting && <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-150%] animate-cta-shine"></span>}
+                <span className="relative z-10 flex items-center gap-2 whitespace-nowrap">
+                  {isSubmitting ? 'Submitting...' : 'Book My Consultation'}
+                  {!isSubmitting && <ArrowRightIcon className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />}
                 </span>
-              </form>
+              </button>
+
+              <span className="text-[10px] text-slate-400 flex items-center justify-center gap-1 mt-2">
+                <LockIcon className="text-slate-400 h-3.5 w-3.5 inline shrink-0" />
+                <span>Your data is fully encrypted and private. We make no false promises.</span>
+              </span>
+            </form>
           </div>
 
           <div className="mt-8 text-sm sm:text-base text-slate-300 space-y-1">
